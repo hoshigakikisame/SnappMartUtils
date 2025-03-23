@@ -40,7 +40,7 @@ def main():
     os.makedirs(dirname, exist_ok=True)
     os.chdir(dirname)
 
-    # produce transaction data    
+    # produce customer data    
     # Rename Customer Keys
     customerData = renameKeys(df, {
         "Alamat Pengiriman": "Alamat",
@@ -64,7 +64,7 @@ def main():
     transactionOrderListData = renameKeys(df, {
         "No. Pesanan": "Transaction Code",
         "Waktu Pesanan Dibuat": "Transaction Date",
-        "SKU Induk": "Product",
+        "Nomor Referensi SKU": "Product",
         "Harga Setelah Diskon": "Price (unit)",
         "Jumlah": "Qty",
     })
