@@ -38,6 +38,15 @@ def renameKeys(df, keymap):
     return df
 
 
+def filtersOut(df, keys, cb):
+    print(df["Status Pesanan"])
+    for key in keys:
+        if key in df.columns:
+            df = df[df[key].apply(cb)]
+
+    return df
+
+
 def main():
     fname = parseArgs()
     df = loadCSV(fname)
@@ -45,6 +54,9 @@ def main():
     dirname = os.path.splitext(fname)[0]
     os.makedirs(dirname, exist_ok=True)
     os.chdir(dirname)
+
+    # filters out cancelled orders
+    df = filtersOut(df, ["Status Pesanan"], lambda x: x != "Batal")
 
     # produce customer data
     # Rename Customer Keys
