@@ -39,7 +39,8 @@ def renameKeys(df, keymap):
 
 
 def filtersOut(df, keys, cb):
-    print(df["Status Pesanan"])
+    # DEBUG
+    # print(df["Status Pesanan"])
     for key in keys:
         if key in df.columns:
             df = df[df[key].apply(cb)]
@@ -87,13 +88,21 @@ def main():
             "No. Pesanan": "Transaction Code",
             "Waktu Pesanan Dibuat": "Transaction Date",
             "Username (Pembeli)": "Customer",
+            "Waktu Pesanan Selesai": "Completed Date",
         },
     )
     transactionOrderGroupData["Name"] = transactionOrderGroupData["Transaction Code"]
     transactionOrderGroupData["Marketplace"] = "Shopee"
     produceSelectiveCSV(
         transactionOrderGroupData,
-        ["Name", "Transaction Code", "Marketplace", "Customer", "Transaction Date"],
+        [
+            "Name",
+            "Transaction Code",
+            "Marketplace",
+            "Customer",
+            "Transaction Date",
+            "Completed Date",
+        ],
         "transaction_order_group.csv",
         dedupe=True,
     )
