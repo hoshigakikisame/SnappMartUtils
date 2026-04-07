@@ -2,3 +2,4 @@ venv
 *.xlsx
 *.csv
 Order.all.*
+pair*/
