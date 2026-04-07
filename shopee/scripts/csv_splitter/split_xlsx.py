@@ -69,13 +69,24 @@ def dataPrep(forder, fincome):
     df["Kecamatan"] = df["Alamat Pengiriman"].apply(pullKecamatanFromAlamat)
 
     def dateIsoFormat(date: str):
-        print(date)
         dt = datetime.strptime(date, "%Y-%m-%d %H:%M")
         iso = dt.astimezone().isoformat()
         return iso
 
     df["Waktu Pesanan Dibuat_x"] = df["Waktu Pesanan Dibuat_x"].apply(dateIsoFormat)
     df["Waktu Pesanan Selesai"] = df["Waktu Pesanan Selesai"].apply(dateIsoFormat)
+
+    # Absolute Value
+    def absoluteValue(x):
+        try:
+            return str(abs(float(x)))
+        except:
+            return x
+
+    df["Biaya Komisi AMS"] = df["Biaya Komisi AMS"].apply(absoluteValue)
+    df["Biaya Administrasi"] = df["Biaya Administrasi"].apply(absoluteValue)
+    df["Biaya Layanan"] = df["Biaya Layanan"].apply(absoluteValue)
+    df["Biaya Proses Pesanan"] = df["Biaya Proses Pesanan"].apply(absoluteValue)
 
     customerData = renameKeys(
         df,
@@ -159,50 +170,7 @@ def dataPrep(forder, fincome):
 
 def doImports(notionToken, fcustomer, ftog, ftol):
 
-    # DUMMIES
-    # customer
-    csv2notionCLI.cli(
-        "--workspace",
-        "Snapp Mart",
-        "--token",
-        notionToken,
-        "--url",
-        "https://www.notion.so/f7479d160eed822f89dd010ef1bf5695?v=c9279d160eed830480840873295671af",
-        "--delimiter",
-        ";",
-        "--merge",
-        fcustomer,
-    )
-
-    # tog
-    csv2notionCLI.cli(
-        "--workspace",
-        "Snapp Mart",
-        "--token",
-        notionToken,
-        "--url",
-        "https://www.notion.so/14179d160eed8217bffa8133e7785f66?v=33b79d160eed804a997c000c303700fa",
-        "--delimiter",
-        ";",
-        "--merge",
-        ftog,
-    )
-
-    # tol
-    csv2notionCLI.cli(
-        "--workspace",
-        "Snapp Mart",
-        "--token",
-        notionToken,
-        "--url",
-        "https://www.notion.so/33b79d160eed8055bcd8df6bad48074b?v=33b79d160eed81f49259000c1ad5a0f5",
-        "--delimiter",
-        ";",
-        "--merge",
-        ftol,
-    )
-
-    # # PROD
+    # # DUMMIES
     # # customer
     # csv2notionCLI.cli(
     #     "--workspace",
@@ -244,6 +212,49 @@ def doImports(notionToken, fcustomer, ftog, ftol):
     #     "--merge",
     #     ftol,
     # )
+
+    # PROD
+    # customer
+    csv2notionCLI.cli(
+        "--workspace",
+        "Snapp Mart",
+        "--token",
+        notionToken,
+        "--url",
+        "https://www.notion.so/20b97959342b4566bf317b626c2e152e?v=1a779d160eed809999a5000c045ec8f2",
+        "--delimiter",
+        ";",
+        "--merge",
+        fcustomer,
+    )
+
+    # tog
+    csv2notionCLI.cli(
+        "--workspace",
+        "Snapp Mart",
+        "--token",
+        notionToken,
+        "--url",
+        "https://www.notion.so/2e279d160eed80c4b475e90d829a2b2c?v=33b79d160eed8085a42b000c734e67b2",
+        "--delimiter",
+        ";",
+        "--merge",
+        ftog,
+    )
+
+    # tol
+    csv2notionCLI.cli(
+        "--workspace",
+        "Snapp Mart",
+        "--token",
+        notionToken,
+        "--url",
+        "https://www.notion.so/2ef79d160eed80f5b3fbd311ff4cfbd5?v=2ef79d160eed813b89d7000c2011e6d8",
+        "--delimiter",
+        ";",
+        "--merge",
+        ftol,
+    )
 
 
 def main():
